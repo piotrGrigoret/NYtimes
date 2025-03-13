@@ -30,13 +30,13 @@
   --color-text: #1A1A1A;
   --color-primary: #096FFA;
   --color-primary-light: color-mix(in srgb, var(--color-primary), white 80%);
+  --color-bg-darker: #6f6d6d;
 
 }
 
 .dark {
   --color-bg: #242424;
   --color-text: rgba(255, 255, 255, 0.87);
-  /* --color-primary: #4F46E5; */
 }
 
 body {

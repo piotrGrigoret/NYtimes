@@ -10,6 +10,7 @@ module.exports = {
         text: "var(--color-text)",
         primary: "var(--color-primary)",
         primaryLight: "var(--color-primary-light)",
+        bgDarker: "var(--color-bg-darker)"
       },
       fontFamily: {
         lato: ["Lato", "sans-serif"],
