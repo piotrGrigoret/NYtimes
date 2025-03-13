@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Regular.ttf') format('truetype');
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Lato-Bold';
+  src: url('/fonts/Lato-Bold.ttf') format('truetype');
+  font-style: normal;
+}
+
+
+:root {
+  font-family: 'Lato';
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --color-bg: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-primary: #096FFA;
+  --color-primary-light: color-mix(in srgb, var(--color-primary), white 80%);
+
+}
+
+.dark {
+  --color-bg: #242424;
+  --color-text: rgba(255, 255, 255, 0.87);
+  /* --color-primary: #4F46E5; */
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+.hidden{
+  overflow: hidden;
+}
+
+
