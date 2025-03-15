@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "../ThemeToogle";
 import { Newspaper } from 'lucide-react';
+import { useLocation } from "react-router-dom";
 
 const BurgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     
@@ -20,13 +22,19 @@ const BurgerMenu = () => {
     };
   }, [isOpen]);
 
+
+
   return (
     <>
-        <div className="flex items-center justify-between gap-6 absolute left-0 lg:static ">
+        <div className={`flex items-center justify-between gap-6 absolute left-0 lg:static ${location.pathname === "/" ? "flex" : "hidden"}`}>
 
             <nav className="hidden lg:flex space-x-6">
                 <a href="#" className="font-bold font-latoBold text-sm relative group">
                     GENERAL
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-all duration-300"></span>
+                </a>
+                <a href="#" className="font-bold font-latoBold text-sm relative group">
+                    SCIENCE
                     <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-all duration-300"></span>
                 </a>
                 <a href="#" className="font-bold font-latoBold text-sm relative group">
@@ -80,8 +88,8 @@ const BurgerMenu = () => {
                 </div>
                 
                 <div className="flex flex-col gap-4 ">
-                    <a href="#" className="font-bold font-latoBold text-xl">SCIENCE</a>
                     <a href="#" className="font-bold font-latoBold text-xl">GENERAL</a>
+                    <a href="#" className="font-bold font-latoBold text-xl">SCIENCE</a>
                     <a href="#" className="font-bold font-latoBold text-xl">ENTERTAINMENT</a>
                     <a href="#" className="font-bold font-latoBold text-xl">TECHNOLOGY</a>
                     <a href="#" className="font-bold font-latoBold text-xl">BUSINESS</a>
