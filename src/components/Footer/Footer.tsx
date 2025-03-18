@@ -5,7 +5,7 @@ export const Footer = () => {
 
   return (
     <footer className='container'>
-      <div className='flex flex-col  gap-6 pt-10 pb-5 text-sm font-normal'>
+      <div className='flex  flex-col  gap-6 pt-10 pb-5 text-sm font-normal'>
         <div className='flex flex-col gap-6 lg:flex-row lg:justify-between'>
           <nav className="flex space-x-5 mx-auto lg:mx-0">
             <a href="https://cv-card.onrender.com/" target="_blank" className="hover:lg:text-primary">About Me</a>
