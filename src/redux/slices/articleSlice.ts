@@ -36,6 +36,7 @@ interface ArticlesState {
   rateLimited: boolean
   retryAfter: number | null
   section: string
+  titleState: string
 }
 
 // Функция для сортировки статей по дате (от новых к старым)
@@ -62,6 +63,7 @@ const initialState: ArticlesState = {
   section: "GENERAL",
   rateLimited: false,
   retryAfter: null,
+  titleState: ""
 }
 
 export const fetchArticles = createAsyncThunk(
@@ -150,6 +152,9 @@ const articlesSlice = createSlice({
         hasPrevPage: false,
       }
     },
+    setTitleState: (state, action: PayloadAction<string>) => {
+      state.titleState = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -202,7 +207,7 @@ export const selectRateLimitStatus = (state: RootState) => ({
   retryAfter: state.articles.retryAfter,
 })
 
-export const { clearArticles, setPage, setPageSize, resetRateLimit, setSection } = articlesSlice.actions
+export const { clearArticles, setPage, setPageSize, resetRateLimit, setSection, setTitleState } = articlesSlice.actions
 
 export default articlesSlice.reducer
 

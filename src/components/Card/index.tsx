@@ -1,4 +1,4 @@
-import { Article } from "../../redux/slices/articleSlice";
+import { Article} from "../../redux/slices/articleSlice";
 import moment from "moment";
 
 interface ItemCardProps {
@@ -10,7 +10,7 @@ export const Card = ({item}: ItemCardProps ) => {
   const formatDate = (dateStr: string) => {
     return moment(dateStr).format("MMM DD, YYYY, HH:mm A");
   };
-   
+
   return (
       <a  href={item.web_url} target="_blank">
         <div 

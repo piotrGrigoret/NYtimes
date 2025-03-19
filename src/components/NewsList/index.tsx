@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Card } from "../Card"
 import { useDispatch, useSelector } from "react-redux"
 import {
@@ -12,6 +12,7 @@ import {
 } from "../../redux/slices/articleSlice"
 import type { AppDispatch } from "../../redux/store"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react"
+import moment from "moment";
 
 export const NewsList = () => {
   const now = new Date()
@@ -20,13 +21,12 @@ export const NewsList = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { items, status, error, pagination, section } = useSelector(selectArticle)
   const { rateLimited, retryAfter } = useSelector(selectRateLimitStatus)
-
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [retryCountdown, setRetryCountdown] = useState<number | null>(null)
   const prevStatusRef = useRef(status)
   const [seeMore, setSeeMore] = useState<boolean>(false)
   const prevSectionRef = useRef(section)
-
+  const [mainDate, setMainDate] = useState("");
   // Загрузка начальных данных
   useEffect(() => {
     if (status === "idle" || prevSectionRef.current !== section) {
@@ -129,6 +129,10 @@ export const NewsList = () => {
     }
   }, [throttledHandleScroll, seeMore, rateLimited])
 
+  const formatTitleDate = (dateStr: string) => {
+    return moment(dateStr).format("DD.MM.YYYY");
+  };
+   
   // Отображение состояния загрузки
   if (status === "idle" || (status === "loading" && items.length === 0)) {
     return (
@@ -153,9 +157,28 @@ export const NewsList = () => {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
-        {items.map((item) => (
-          <Card key={item._id} item={item} />
-        ))}
+          {items.reduce((acc: React.ReactElement[], item, index) => {
+            const formattedDate = formatTitleDate(item.pub_date)
+            const prevItem = items[index - 1]
+            const prevFormattedDate = prevItem ? formatTitleDate(prevItem.pub_date) : null
+
+            const showDateHeader = index === 0 || formattedDate !== prevFormattedDate
+
+            acc.push(
+              <div key={item._id}>
+                <div className="h-6">
+                {showDateHeader && (
+                  <div className="font-latoBold text-lg">
+                    <h2>News for {formattedDate}</h2>
+                  </div>
+                )}
+                </div>
+                <Card item={item} />
+              </div>
+            )
+
+            return acc
+          }, [])}
       </div>
 
       {/* Кнопка "More Articles" */}
