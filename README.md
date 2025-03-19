@@ -29,9 +29,10 @@
 ![Lucide React](https://img.shields.io/badge/lucide--react-0.479.0-2D8CFF?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgMTJIMjFNNyA4TDMgMTJMNyAxNk0xNyA4TDIxIDEyTDE3IDE2IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=white)
 
 ### Backend
-
 https://github.com/piotrGrigoret/nyt-api-proxy
 
+### Deploy
+![Render](https://img.shields.io/badge/Render-46B3A9?style=for-the-badge&logo=render&logoColor=white)
 
 ---
 
