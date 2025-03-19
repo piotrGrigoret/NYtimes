@@ -76,10 +76,10 @@ This **React** application interacts with the **NY Times API**, providing users 
 - ⚠️ **Error Handling** – displays appropriate messages if data is unavailable or an error occurs.  
 - 🔄 **Frontend + Serverless Backend** – this is the frontend part of the application, with the backend implemented using **Vercel serverless functions**.  
 
-<div style="display: flex; flex-direction: column; align-items: center;" align="center">
-  <img src="/public/assets/png/git1.png" width="70%">
-  <img src="/public/assets/png/git22.png" width="70%">
-  <img src="/public/assets/png/git33.png" width="70%">
-  <img src="/public/assets/png/git4.png" width="70%">
-  <img src="/public/assets/png/git5.png" width="70%">
+<div align="center">
+  <img src="/public/assets/png/git1.png" width="70%" style="border-radius: 10px;">
+  <img src="/public/assets/png/git22.png" width="70%" style="border-radius: 10px;">
+  <img src="/public/assets/png/git33.png" width="70%" style="border-radius: 10px;">
+  <img src="/public/assets/png/git4.png" width="70%" style="border-radius: 10px;">
+  <img src="/public/assets/png/git5.png" width="70%" style="border-radius: 10px;">
 </div>
