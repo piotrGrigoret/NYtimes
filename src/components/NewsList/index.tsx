@@ -166,9 +166,9 @@ export const NewsList = () => {
 
             acc.push(
               <div key={item._id}>
-                <div className="h-6">
+                <div className=" h-6">
                 {showDateHeader && (
-                  <div className="font-latoBold text-lg">
+                  <div className="pl-4 font-latoBold text-lg">
                     <h2>News for {formattedDate}</h2>
                   </div>
                 )}
