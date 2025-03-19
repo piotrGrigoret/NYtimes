@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { Card } from '../components/Card';
 import { NewsList } from '../components/NewsList';
 import { Newspaper } from 'lucide-react';
 import { selectArticle } from '../redux/slices/articleSlice';
