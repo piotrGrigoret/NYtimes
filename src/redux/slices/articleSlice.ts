@@ -8,6 +8,7 @@ export interface Article {
   web_url: string
   pub_date: string
   multimedia: { url: string } | null
+  section_name?: string
 }
 
 interface PaginationState {
@@ -18,6 +19,14 @@ interface PaginationState {
   hasNextPage: boolean
   hasPrevPage: boolean
 }
+interface ApiResponse {
+  items: Article[]
+  pagination: PaginationState
+  source: string
+  error?: string
+  message?: string
+  retryAfter?: number
+}
 
 interface ArticlesState {
   items: Article[]
@@ -26,15 +35,16 @@ interface ArticlesState {
   pagination: PaginationState
   rateLimited: boolean
   retryAfter: number | null
+  section: string
 }
 
-interface ApiResponse {
-  items: Article[]
-  pagination: PaginationState
-  source: string
-  error?: string
-  message?: string
-  retryAfter?: number
+// Функция для сортировки статей по дате (от новых к старым)
+const sortArticlesByDate = (articles: Article[]): Article[] => {
+  return [...articles].sort((a, b) => {
+    const dateA = new Date(a.pub_date).getTime()
+    const dateB = new Date(b.pub_date).getTime()
+    return dateB - dateA
+  })
 }
 
 const initialState: ArticlesState = {
@@ -49,6 +59,7 @@ const initialState: ArticlesState = {
     hasNextPage: false,
     hasPrevPage: false,
   },
+  section: "GENERAL",
   rateLimited: false,
   retryAfter: null,
 }
@@ -56,20 +67,27 @@ const initialState: ArticlesState = {
 export const fetchArticles = createAsyncThunk(
   "articles/fetchArticles",
   async (
-    { year, month, page = 1, pageSize = 10 }: { year: number; month: number; page?: number; pageSize?: number },
+    {
+      year,
+      month,
+      page = 1,
+      pageSize = 10,
+      section = "GENERAL",
+    }: { year: number; month: number; page?: number; pageSize?: number; section?: string },
     { rejectWithValue },
   ) => {
     try {
+      const baseUrl =
+           "https://nyt-api-proxy.vercel.app/api/nytimes"
+          //  "http://localhost:3000/api/nytimes"
+
       const response = await fetch(
-        // `https://nyt-api-proxy.vercel.app/api/nytimes?year=${year}&month=${month}&page=${page}&pageSize=${pageSize}`,
-        ` http://localhost:3000/api/nytimes?year=${year}&month=${month}&page=${page}&pageSize=${pageSize}`,
+        `${baseUrl}?year=${year}&month=${month}&page=${page}&pageSize=${pageSize}&section=${section}`,
       )
 
       if (!response.ok) {
-        // Если ответ не OK, получаем данные ошибки
         const errorData = await response.json()
 
-        // Если это ошибка превышения лимита запросов
         if (response.status === 429) {
           return rejectWithValue({
             error: errorData.error || "Rate limit exceeded",
@@ -79,7 +97,6 @@ export const fetchArticles = createAsyncThunk(
           })
         }
 
-        // Для других ошибок
         return rejectWithValue({
           error: errorData.error || "Failed to fetch articles",
           message: errorData.message || "An error occurred",
@@ -87,7 +104,6 @@ export const fetchArticles = createAsyncThunk(
         })
       }
       const data = await response.json()
-      console.log(data);
 
       return data
     } catch (error) {
@@ -121,12 +137,24 @@ const articlesSlice = createSlice({
       state.rateLimited = false
       state.retryAfter = null
     },
+    setSection: (state, action: PayloadAction<string>) => {
+      state.section = action.payload 
+      state.items = [] 
+      state.status = "idle"
+      state.pagination = {
+        currentPage: 1,
+        pageSize: 15,
+        totalPages: 0,
+        totalResults: 0,
+        hasNextPage: false,
+        hasPrevPage: false,
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticles.pending, (state) => {
         state.status = "loading"
-        // Не сбрасываем ошибку, если это повторная загрузка при прокрутке
         if (state.items.length === 0) {
           state.error = null
         }
@@ -137,15 +165,13 @@ const articlesSlice = createSlice({
         state.retryAfter = null
 
         if (action.payload.pagination.currentPage === 1) {
-          state.items = action.payload.items
+          state.items = sortArticlesByDate(action.payload.items)
         } else {
-          // Проверяем на дубликаты перед добавлением
           const newItems = action.payload.items.filter(
             (newItem) => !state.items.some((item) => item._id === newItem._id),
           )
-          state.items = [...state.items, ...newItems]
+          state.items = sortArticlesByDate([...state.items, ...newItems])
         }
-
         if (action.payload.pagination) {
           state.pagination = action.payload.pagination
         }
@@ -153,9 +179,8 @@ const articlesSlice = createSlice({
       .addCase(fetchArticles.rejected, (state, action) => {
         state.status = "failed"
 
-        // Проверяем, является ли ошибка ошибкой превышения лимита запросов
         if (action.payload && typeof action.payload === "object") {
-          const payload = action.payload as  { status?: number; retryAfter?: number; message?: string }
+          const payload = action.payload as { status?: number; retryAfter?: number; message?: string }
 
           if (payload.status === 429) {
             state.rateLimited = true
@@ -177,7 +202,7 @@ export const selectRateLimitStatus = (state: RootState) => ({
   retryAfter: state.articles.retryAfter,
 })
 
-export const { clearArticles, setPage, setPageSize, resetRateLimit } = articlesSlice.actions
+export const { clearArticles, setPage, setPageSize, resetRateLimit, setSection } = articlesSlice.actions
 
 export default articlesSlice.reducer
 

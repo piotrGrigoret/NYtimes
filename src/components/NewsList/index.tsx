@@ -18,20 +18,22 @@ export const NewsList = () => {
   const year = now.getFullYear()
   const month = now.getMonth() + 1
   const dispatch = useDispatch<AppDispatch>()
-  const { items, status, error, pagination } = useSelector(selectArticle)
+  const { items, status, error, pagination, section } = useSelector(selectArticle)
   const { rateLimited, retryAfter } = useSelector(selectRateLimitStatus)
 
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [retryCountdown, setRetryCountdown] = useState<number | null>(null)
   const prevStatusRef = useRef(status)
   const [seeMore, setSeeMore] = useState<boolean>(false)
+  const prevSectionRef = useRef(section)
 
   // Загрузка начальных данных
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchArticles({ year, month }))
+    if (status === "idle" || prevSectionRef.current !== section) {
+      dispatch(fetchArticles({ year, month, section }))
+      prevSectionRef.current = section
     }
-  }, [status, dispatch, year, month])
+  }, [status, dispatch, year, month, section])
 
   // Обработка состояния загрузки
   useEffect(() => {
@@ -79,13 +81,14 @@ export const NewsList = () => {
             month,
             page: nextPage,
             pageSize: pagination.pageSize,
+            section,
           }),
         )
       } else {
         setIsLoadingMore(false)
       }
     }
-  }, [dispatch, pagination, status, isLoadingMore, year, month, rateLimited])
+  }, [dispatch, pagination, status, isLoadingMore, year, month, rateLimited, section])
 
   // Обработчик прокрутки
   const handleScroll = useCallback(() => {
@@ -180,6 +183,10 @@ export const NewsList = () => {
       {isLoadingMore && !rateLimited && (
         <div className="flex justify-center items-center py-6">
           <DotLottieReact className="animation w-[100px] h-[100px]" src="assets/lottie/load.lottie" loop autoplay />
+        </div>
+      )}
+
+      {/* Сообщ  src="assets/lottie/load.lottie" loop autoplay />
         </div>
       )}
 
