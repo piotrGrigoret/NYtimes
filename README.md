@@ -78,8 +78,8 @@ This **React** application interacts with the **NY Times API**, providing users 
 
 <div style="display: flex; flex-direction: column; align-items: center;" align="center">
   <img src="/public/assets/png/git1.png" width="70%">
-  <img src="/public/assets/png/git2.png" width="70%">
-  <img src="/public/assets/png/git3.png" width="70%">
+  <img src="/public/assets/png/git22.png" width="70%">
+  <img src="/public/assets/png/git33.png" width="70%">
   <img src="/public/assets/png/git4.png" width="70%">
   <img src="/public/assets/png/git5.png" width="70%">
 </div>
