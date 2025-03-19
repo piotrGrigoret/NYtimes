@@ -8,7 +8,7 @@
 </div>
 
 ## 🛠️ Technologies
-
+![NYT Archive API](https://img.shields.io/badge/NYT_Archive_API-D50000?style=for-the-badge&logo=new-york-times&logoColor=white)
 ### Frontend
 ![Static Badge](https://img.shields.io/badge/https%3A%2F%2Fimg.shields.io%2Fbadge%2Fany_text--blue?logo=javascript&logoColor=%23F7DF1E&label=JavaScript&color=%23F7DF1E&link=https%3A%2F%2Fru.wikipedia.org%2Fwiki%2FJavaScript)
 ![Static Badge](https://img.shields.io/badge/5.7.2-%230d79f2?logo=TypeScript&label=TypeScript&labelColor=dark-gray)
