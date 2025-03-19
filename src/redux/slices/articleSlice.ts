@@ -78,8 +78,8 @@ export const fetchArticles = createAsyncThunk(
   ) => {
     try {
       const baseUrl =
-          //  "https://nyt-api-proxy.vercel.app/api/nytimes"
-           "http://localhost:3000/api/nytimes"
+           "https://nyt-api-proxy.vercel.app/api/nytimes"
+          //  "http://localhost:3000/api/nytimes"
 
       const response = await fetch(
         `${baseUrl}?year=${year}&month=${month}&page=${page}&pageSize=${pageSize}&section=${section}`,
