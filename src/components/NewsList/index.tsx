@@ -26,7 +26,6 @@ export const NewsList = () => {
   const prevStatusRef = useRef(status)
   const [seeMore, setSeeMore] = useState<boolean>(false)
   const prevSectionRef = useRef(section)
-  const [mainDate, setMainDate] = useState("");
   // Загрузка начальных данных
   useEffect(() => {
     if (status === "idle" || prevSectionRef.current !== section) {
