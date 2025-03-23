@@ -2,6 +2,7 @@
 <div align="center">
   <img src="/public/assets/png/times.png" alt="logo" width="18%">
   <h1>New York Times API - test task</h1>
+
   [![Live Demo](https://img.shields.io/badge/Live_Demo-8A2BE2?style=for-the-badge&logo=render&logoColor=white)](https://nytimes-78rz.onrender.com/)
 
 </div>
